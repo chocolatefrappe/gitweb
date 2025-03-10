@@ -1,5 +1,5 @@
 ## About
-A hyperfast web frontend for git repositories written in C.  
+gitweb - Git web interface (web frontend to Git repositories)  
 - https://git-scm.com/docs/gitweb/
 
 ## References
