@@ -1,6 +1,14 @@
+ARG S6_OVERLAY_VERSION=v3.2.0.0
+FROM socheatsok78/s6-overlay-distribution:${S6_OVERLAY_VERSION} AS s6-overlay
+
 FROM nginx:stable-alpine
+
+ADD --chmod=755 https://raw.githubusercontent.com/socheatsok78/s6-overlay-distribution/refs/heads/main/hacks/init-shim /init-shim
+COPY --link --from=s6-overlay / /
+ENTRYPOINT [ "/init-shim" ]
+CMD [ "sleep", "infinity" ]
+
 RUN apk add --no-cache bash fcgiwrap spawn-fcgi git git-daemon git-gitweb perl perl-cgi highlight
-ADD rootfs /
 
 # Create git user and install gitolite
 RUN <<EOF
@@ -17,6 +25,7 @@ RUN <<EOF
 EOF
 
 # Switch back to root user
+ADD rootfs /
 USER root
 VOLUME [ "/data" ]
 WORKDIR /data
