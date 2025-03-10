@@ -29,3 +29,5 @@ ADD rootfs /
 USER root
 VOLUME [ "/data" ]
 WORKDIR /data
+
+EXPOSE 9418/tcp 9418/udp
