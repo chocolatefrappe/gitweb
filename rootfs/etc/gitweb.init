@@ -1,0 +1,28 @@
+#!/bin/bash
+
+GITWEB_DOMAIN=${GITWEB_DOMAIN:-"git.localhost"}
+GITWEB_SITE_NAME=${GITWEB_SITE_NAME:-"${GITWEB_DOMAIN} repositories"}
+
+# Configure the git clone urls
+GITWEB_CLONE_URL_SCHEME=${GITWEB_CLONE_URL_SCHEME:-https}
+GITWEB_CLONE_URL_HOST=${GITWEB_CLONE_URL_HOST:-${GITWEB_DOMAIN}}
+
+cat <<EOF
+# gitweb configuration file
+# https://git-scm.com/docs/gitweb.conf
+
+our \$site_name = '$GITWEB_SITE_NAME';
+our \$projectroot = "/var/lib/git/repositories";
+our @git_base_url_list = qw(git://$GITWEB_CLONE_URL_HOST $GITWEB_CLONE_URL_SCHEME://git@$GITWEB_CLONE_URL_HOST);
+
+##
+## List of common configuration options
+##
+\$omit_owner = 1;
+
+# To enable "blame" view (showing the author of each line in a source file), add the following line
+\$feature{'blame'}{'default'} = [1];
+
+# Enable syntax highlighting with Gitweb
+\$feature{'highlight'}{'default'} = [1];
+EOF

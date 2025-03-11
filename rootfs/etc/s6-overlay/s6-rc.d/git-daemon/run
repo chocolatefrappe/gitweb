@@ -1,2 +1,2 @@
 #!/command/execlineb -P
-s6-setuidgid git /usr/bin/git daemon --reuseaddr --base-path=/data /data
+/usr/bin/git daemon --verbose --reuseaddr --user=git --base-path=/var/lib/git/repositories /var/lib/git/repositories
