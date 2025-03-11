@@ -1,0 +1,60 @@
+#!/bin/bash
+
+README=(
+	README.md
+	readme.md
+	README.mkd
+	readme.mkd
+	README.rst
+	readme.rst
+	README.html
+	readme.html
+	README.htm
+	readme.htm
+	README.txt
+	readme.txt
+	README
+	readme
+	INSTALL.md
+	install.md
+	INSTALL.mkd
+	install.mkd
+	INSTALL.rst
+	install.rst
+	INSTALL.html
+	install.html
+	INSTALL.htm
+	install.htm
+	INSTALL.txt
+	install.txt
+	INSTALL
+	install
+)
+
+git config --global --add safe.directory '*'
+
+find "/var/lib/git/repositories" -name *.git | while read repo; do
+	cd "$repo" && {
+		for readme in "${README[@]}"; do
+			if git cat-file -e HEAD:${readme} 2>/dev/nul; then
+				echo "Adding $readme to $repo"
+				git cat-file blob HEAD:${readme} | /usr/lib/gitweb/filters/about-formatting.sh ${readme} > $repo/README.html
+				break
+			fi
+		done
+	}
+done
+
+inotifywait -r -m -e attrib,create,delete,modify,move "/var/lib/git/repositories" | while read directory event filename; do
+	if [[ "$filename" == *.git ]]; then
+		cd "$directory" && {
+			for readme in "${README[@]}"; do
+				if git cat-file -e HEAD:${readme} 2>/dev/nul; then
+					echo "Adding $readme to $directory"
+					git cat-file blob HEAD:${readme} | /usr/lib/gitweb/filters/about-formatting.sh ${readme} > $directory/README.html
+					break
+				fi
+			done
+		}
+	fi
+done

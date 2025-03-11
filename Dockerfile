@@ -6,12 +6,14 @@ COPY --link --from=s6-overlay / /
 
 RUN apk add --no-cache \
     bash \
+    cgit \
     fcgiwrap \
     git \
     git-daemon \
     git-gitweb \
     groff \
     highlight \
+    inotify-tools \
     lua5.3-libs \
     perl \
     perl-cgi \
@@ -21,7 +23,9 @@ RUN apk add --no-cache \
     spawn-fcgi \
     tzdata \
     xz \
-    zlib
+    zlib \
+    && cp -r /usr/lib/cgit/ /usr/lib/gitweb/ \
+    && apk del cgit
 
 # Create git user and install gitolite
 RUN <<EOF
