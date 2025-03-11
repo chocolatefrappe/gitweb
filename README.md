@@ -5,3 +5,4 @@ gitweb - Git web interface (web frontend to Git repositories)
 ## References
 - https://wiki.archlinux.org/title/Gitweb
 - https://git-scm.com/book/be/v2/Git-on-the-Server-GitWeb
+- https://bastian.rieck.me/blog/2013/gitweb_readme_workflow/
