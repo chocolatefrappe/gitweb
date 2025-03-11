@@ -1,0 +1,4 @@
+#!/bin/bash
+
+GIT_DIR=${1:-$(pwd)}
+git --git-dir=${GIT_DIR} fetch origin +refs/heads/*:refs/heads/* --prune
