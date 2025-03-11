@@ -25,4 +25,7 @@ our @git_base_url_list = qw(git://$GITWEB_CLONE_URL_HOST $GITWEB_CLONE_URL_SCHEM
 
 # Enable syntax highlighting with Gitweb
 \$feature{'highlight'}{'default'} = [1];
+
+# Enable PATH_INFO usage in gitweb
+\$feature{'pathinfo'}{'default'} = [1];
 EOF
