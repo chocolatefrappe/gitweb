@@ -30,8 +30,8 @@ RUN apk add --no-cache \
 # Create git user and group
 RUN <<EOF
     mkdir -p /var/lib/git
-    addgroup -S git
-    adduser -S -D -G git -h /var/lib/git git
+    addgroup -S -g 102 git
+    adduser -S -D -G git -h /var/lib/git -u 102 git
     chown -R git:git /var/lib/git
 EOF
 
@@ -43,5 +43,6 @@ STOPSIGNAL SIGTERM
 VOLUME [ "/var/lib/git/repositories", "/var/cache/cgit" ]
 WORKDIR /var/lib/git/repositories
 
+# The following ports are exposed by default
 # The git:// protocol is served by the git-daemon service on port 9418
 EXPOSE 9418/tcp 9418/udp
