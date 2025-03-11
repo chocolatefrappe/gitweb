@@ -37,7 +37,6 @@ RUN <<EOF
     chown -R git:git /var/lib/git
 EOF
 
-# Switch back to root user
 ADD rootfs /
 ENTRYPOINT [ "/init-shim", "/docker-entrypoint-shim.sh" ]
 CMD [ "nginx", "-g", "daemon off;" ]
